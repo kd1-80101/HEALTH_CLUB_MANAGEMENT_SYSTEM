@@ -1,10 +1,9 @@
 package com.app.entities;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -20,10 +19,10 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name="trainers")
-@AttributeOverride(name = "id", column = @Column(name = "trainer_id"))
-public class Trainer extends BaseEntity{
+public class Trainer extends BaseEntity {
 	
 	@ManyToOne
 	@JoinColumn(name="user_id")
+	@MapsId
 	private User user;
 }

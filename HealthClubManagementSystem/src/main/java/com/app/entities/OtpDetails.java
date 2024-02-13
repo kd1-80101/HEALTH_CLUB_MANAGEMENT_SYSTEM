@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -20,18 +18,19 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name="community_posts")
-public class CommunityPosts extends BaseEntity {
+@Table(name = "Otp_details")
+public class OtpDetails extends BaseEntity {
 	
-	@Column(name="post_content")
-	private String postContent;
+	@Column(name="otp")
+	private long otp;
 	
-	@Column(name= "post_date",columnDefinition = "TIMESTAMP")
-	private LocalDateTime postDate;
+	@Column(name="generated_date",columnDefinition = "TIMESTAMP")
+	private LocalDateTime generatedOn;
 	
-	@ManyToOne
-	@JoinColumn(name="user_id")
-	private User user;
+	@Column(name="expiry_date",columnDefinition = "TIMESTAMP")
+	private LocalDateTime expiryDate;
 	
-	
+	@Column(name="is_verified")
+	private boolean isVerified;
+
 }

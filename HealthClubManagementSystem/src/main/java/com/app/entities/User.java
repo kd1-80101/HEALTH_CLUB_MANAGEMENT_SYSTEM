@@ -14,11 +14,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.app.enums.Gender;
 import com.app.enums.Role;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Entity // Entity representing user information
 @Table(name = "users")
 public class User extends BaseEntity {
@@ -51,9 +57,4 @@ public class User extends BaseEntity {
 	@Enumerated(EnumType.STRING) // Specifies that the 'role' field is mapped to a string value in the database
 	private Role role; // Enum representing the role of the user (e.g. admin, user, customer)
 
-	@Override
-	public String toString() {
-		return "User [firstName=" + firstName + ", lastName=" + lastName + ", dateOfBirth=" + dateOfBirth + ", email="
-				+ email + ", role=" + role + "]";
-	}
 }

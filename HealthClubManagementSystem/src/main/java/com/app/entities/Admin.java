@@ -1,9 +1,8 @@
 package com.app.entities;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -20,10 +19,11 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name="admin")
-@AttributeOverride(name = "id", column = @Column(name = "admin_id"))
 public class Admin extends BaseEntity {
 	
 	@OneToOne
 	@JoinColumn(name="user_id")
+	@MapsId
 	private User user;
+	
 }

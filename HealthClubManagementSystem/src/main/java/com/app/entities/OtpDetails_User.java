@@ -16,14 +16,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name="diet")
-public class Diet extends BaseEntity {
+@Table(name = "OtpDetails_User")
+public class OtpDetails_User extends BaseEntity {
 	
-	@Column(name="diet_name", length = 60, nullable = false)
-	private String dietName;
+	@Column(name="otp_id")
+	private long otp_id;
 	
-	@Column(name="description", length = 250, nullable = false)
-	private String description;
+	@Column(name="user_id")
+	private long user_id;
 
-	
 }

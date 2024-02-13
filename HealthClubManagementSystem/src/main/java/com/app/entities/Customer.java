@@ -2,11 +2,11 @@ package com.app.entities;
 
 import java.time.LocalDate;
 
-import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,7 +24,6 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name="customers")
-@AttributeOverride(name = "id", column = @Column(name = "customer_id"))
 public class Customer extends BaseEntity {
 	
 	@Column(name="membership_type", length = 50, nullable = false)
@@ -39,6 +38,9 @@ public class Customer extends BaseEntity {
 	
 	@ManyToOne
 	@JoinColumn(name="user_id")
+	@MapsId
 	private User user;
+	
+	
 	
 }
