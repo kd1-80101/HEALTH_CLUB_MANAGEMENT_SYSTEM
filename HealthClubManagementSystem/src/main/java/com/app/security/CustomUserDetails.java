@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.app.entities.User;
+import com.app.enums.Status;
 
 public class CustomUserDetails implements UserDetails {
 	private User user;
@@ -37,8 +38,7 @@ public class CustomUserDetails implements UserDetails {
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
+		return user.getStatus()==Status.APPROVED ? true : false;
 	}
 
 	@Override

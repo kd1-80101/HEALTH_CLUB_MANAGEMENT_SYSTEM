@@ -4,12 +4,16 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.app.enums.Membership;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,21 +30,23 @@ import lombok.ToString;
 @Table(name="customers")
 public class Customer extends BaseEntity {
 	
-	@Column(name="membership_type", length = 50, nullable = false)
-	private String membership;
+	@Enumerated(EnumType.STRING)
+	private Membership membership;
 	
-	@Column(name="membership_validity")
+	@Column
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate membershipValidity;
+	private LocalDate membershipEnd;
 	
-	@Column(name="approval_status", length = 50, nullable = false)
-	private String approvalStatus;
+	@OneToOne
+    @JoinColumn(name="user_id")
+    @MapsId
+    private User user;
 	
-	@ManyToOne
-	@JoinColumn(name="user_id")
-	@MapsId
-	private User user;
+	@Column
+	private double payment;
 	
-	
+	@Column
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate membershipStart;
 	
 }

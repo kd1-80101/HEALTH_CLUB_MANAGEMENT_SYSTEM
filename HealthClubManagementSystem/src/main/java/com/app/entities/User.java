@@ -13,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.app.enums.Gender;
 import com.app.enums.Role;
+import com.app.enums.Status;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -57,4 +58,8 @@ public class User extends BaseEntity {
 	@Enumerated(EnumType.STRING) // Specifies that the 'role' field is mapped to a string value in the database
 	private Role role; // Enum representing the role of the user (e.g. admin, user, customer)
 
+	@Enumerated(EnumType.STRING)
+	private Status status;
+
+	
 }

@@ -3,6 +3,7 @@ package com.app.entities;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -24,11 +25,11 @@ public class assignedDiet extends BaseEntity {
 	@JoinColumn(name="trainer_id")
 	private Trainer trainer;
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="customer_id")
 	private Customer customer;
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="diet_id")
 	private Diet diet;
 	

@@ -1,5 +1,7 @@
 package com.app.service;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -8,9 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.app.dao.UserDao;
 import com.app.dto.RegisterUserDTO;
-import com.app.dto.SigninRequest;
-import com.app.dto.SigninResponse;
+import com.app.dto.approvedDTO;
 import com.app.entities.User;
+import com.app.enums.Role;
+import com.app.enums.Status;
 
 @Service
 @Transactional
@@ -25,22 +28,44 @@ public class UserSeriveImpl implements UserService {
 	@Autowired
 	private ModelMapper mapper;
 
-	@Override
-	public SigninResponse getUser(SigninRequest cred) {
-		User tempUser = userDao.findByEmail(cred.getEmail()).orElseThrow();
-		SigninResponse resp= new SigninResponse();
-		if(tempUser.getPassword().equals(cred.getPassword())) {
-			resp.setStatus(true);
-		}
-		return resp;
-	}
-
+	
 	@Override
 	public RegisterUserDTO registerUser(RegisterUserDTO reqDTO) {
 		User user=mapper.map(reqDTO, User.class);
+		user.setStatus(Status.PENDING);
+		user.setRole(Role.PENDING);
 		user.setPassword(encoder.encode(user.getPassword()));//pwd : encrypted using SHA
 		return mapper.map(userDao.save(user), RegisterUserDTO.class);
 	
 	}
 
+	@Override
+	public List<User> pendingUsersList() {
+		
+		return userDao.findAllByStatus(Status.PENDING);
+	}
+
+	
+
+	@Override
+	public Status getStatus(String email) {
+	User temp = userDao.findByEmail(email).orElseThrow();	// TODO Auto-generated method stub
+		return temp.getStatus();
+	}
+
+	@Override
+	public Role getRole(String email) {
+		User temp = userDao.findByEmail(email).orElseThrow();	// TODO Auto-generated method stub
+		return temp.getRole();
+	}
+
+	@Override
+	public approvedDTO approvedUsers(approvedDTO approved) {
+		User id = userDao.findById(approved.getId()).orElseThrow();
+		id.setRole(approved.getRole());
+		id.setStatus(approved.getStatus());
+		return new approvedDTO(id.getId(),id.getStatus(),id.getRole());
+	}
+
+	
 }

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.dto.RegisterUserDTO;
 import com.app.dto.SigninRequest;
 import com.app.dto.SigninResponse;
+import com.app.enums.Role;
+import com.app.enums.Status;
 import com.app.security.JwtUtils;
 import com.app.service.UserService;
 
@@ -37,7 +39,9 @@ public class UserSignInSignUpController {
 						(reqDTO.getEmail(), reqDTO.getPassword()));
 		System.out.println(verifiedAuth.getClass());// Custom user details
 		// => auth success
-		return ResponseEntity.ok(new SigninResponse(utils.generateJwtToken(verifiedAuth), "Successful Authentication!!!", true));
+		Status s = userService.getStatus(reqDTO.getEmail());
+		Role r= userService.getRole(reqDTO.getEmail());
+		return ResponseEntity.ok(new SigninResponse(utils.generateJwtToken(verifiedAuth), "Successful Authentication!!!",s,r));
 	
 	}
 	// Method for handling user login. Receives login credentials as RequestBody and validates them
