@@ -9,15 +9,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.dao.UserDao;
+import com.app.dto.ApprovedDTO;
 import com.app.dto.RegisterUserDTO;
-import com.app.dto.approvedDTO;
 import com.app.entities.User;
 import com.app.enums.Role;
 import com.app.enums.Status;
 
 @Service
 @Transactional
-public class UserSeriveImpl implements UserService {
+public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
@@ -57,11 +57,11 @@ public class UserSeriveImpl implements UserService {
 	}
 
 	@Override
-	public approvedDTO approvedUsers(approvedDTO approved) {
+	public ApprovedDTO approvedUsers(ApprovedDTO approved) {
 		User id = userDao.findById(approved.getId()).orElseThrow();
 		id.setRole(approved.getRole());
 		id.setStatus(approved.getStatus());
-		return new approvedDTO(id.getId(), id.getStatus(), id.getRole());
+		return new ApprovedDTO(id.getId(), id.getStatus(), id.getRole());
 	}
 
 	@Override
@@ -74,4 +74,6 @@ public class UserSeriveImpl implements UserService {
 		return userDao.findAllByStatusAndRole(Status.APPROVED, Role.TRAINER);
 	}
 
+
+	
 }

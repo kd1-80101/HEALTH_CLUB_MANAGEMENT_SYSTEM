@@ -14,8 +14,8 @@ public class Trainer extends BaseEntity {
 
     @OneToOne
     @MapsId // Map the userId as the primary key of Trainer
-    @JoinColumn(name = "user_id")
-    private User userId;
+    @JoinColumn
+    private User trainer;
 
     @Column
     private String expertise;

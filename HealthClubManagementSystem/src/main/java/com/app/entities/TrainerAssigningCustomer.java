@@ -1,7 +1,5 @@
 package com.app.entities;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,16 +15,15 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="triner_AssignTo_Customer")
-@AttributeOverride(name = "id", column = @Column(name = "trainer_customer_id"))
+@Table(name="trainer_AssignTo_Customer")
 public class TrainerAssigningCustomer extends BaseEntity {
-	
-	@ManyToOne
-	@JoinColumn(name="trainer_id")
-	private Trainer trainer;
-	
-	@ManyToOne
-	@JoinColumn(name="customer_id")
-	private Customer customer;
-	
+    
+    @ManyToOne
+    @JoinColumn(name="trainer_id")
+    private Trainer trainer;
+    
+    @ManyToOne
+    @JoinColumn(name="customer_id")
+    private Customer customer;
+    
 }

@@ -3,7 +3,7 @@ package com.app.service;
 import java.util.List;
 
 import com.app.dto.RegisterUserDTO;
-import com.app.dto.approvedDTO;
+import com.app.dto.ApprovedDTO;
 import com.app.entities.User;
 import com.app.enums.Role;
 import com.app.enums.Status;
@@ -18,11 +18,13 @@ public  Status getStatus(String email);
 
 public  Role getRole(String email);
 
-public approvedDTO approvedUsers(approvedDTO approved);
+public ApprovedDTO approvedUsers(ApprovedDTO approved);
 
 public List<User> customerList();
 
 public List<User> trainerList();
+
+
 
 }
 		

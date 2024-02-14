@@ -10,7 +10,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class approvedDTO {
+public class ApprovedDTO {
 	@NotNull
 	private Long id;
 	private Status status;
