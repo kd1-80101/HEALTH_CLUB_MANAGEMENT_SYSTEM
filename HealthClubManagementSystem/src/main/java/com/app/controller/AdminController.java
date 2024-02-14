@@ -28,10 +28,22 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.OK).body(userService.pendingUsersList());
 	}
 	
-	@PostMapping("/approved")
+	@PostMapping("/approve")
 	public ResponseEntity<?> approvedUsers(@RequestBody @Valid approvedDTO approved){
 	
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.approvedUsers(approved));
+	}
+
+	@GetMapping("/customerList")
+	public ResponseEntity<?> customerList(){
+	
+		return ResponseEntity.status(HttpStatus.OK).body(userService.customerList());
+	}
+	
+	@GetMapping("/trainerList")
+	public ResponseEntity<?> trainerList(){
+	
+		return ResponseEntity.status(HttpStatus.OK).body(userService.trainerList());
 	}
 
 }

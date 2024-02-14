@@ -19,6 +19,11 @@ public  Status getStatus(String email);
 public  Role getRole(String email);
 
 public approvedDTO approvedUsers(approvedDTO approved);
+
+public List<User> customerList();
+
+public List<User> trainerList();
+
 }
 		
 

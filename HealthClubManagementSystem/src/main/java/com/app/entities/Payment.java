@@ -25,7 +25,7 @@ public class Payment  extends BaseEntity{
 	private String transactionNo;
 	
 	@Column(name="payment_status")
-	private String paymentStatus;
+	private boolean paymentStatus;
 	
 	@Column(name="payment_date",columnDefinition = "TIMESTAMP")
 	private LocalDateTime paymentDate;

@@ -43,7 +43,7 @@ public class Customer extends BaseEntity {
     private User user;
 	
 	@Column
-	private double payment;
+	private boolean payment;
 	
 	@Column
 	@DateTimeFormat(pattern = "yyyy-MM-dd")

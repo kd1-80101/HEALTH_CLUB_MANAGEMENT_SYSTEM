@@ -1,16 +1,7 @@
 package com.app.entities;
+import javax.persistence.*;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-import javax.persistence.Table;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
@@ -18,11 +9,15 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name="trainers")
+@Table(name = "trainers")
 public class Trainer extends BaseEntity {
-	
-	@ManyToOne
-	@JoinColumn(name="user_id")
-	@MapsId
-	private User user;
+
+    @OneToOne
+    @MapsId // Map the userId as the primary key of Trainer
+    @JoinColumn(name = "user_id")
+    private User userId;
+
+    @Column
+    private String expertise;
+
 }
