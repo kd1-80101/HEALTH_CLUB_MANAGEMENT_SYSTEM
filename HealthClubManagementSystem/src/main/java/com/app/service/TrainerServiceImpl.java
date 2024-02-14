@@ -1,5 +1,7 @@
 package com.app.service;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -12,6 +14,7 @@ import com.app.dao.TrainerDao;
 import com.app.dao.UserDao;
 import com.app.dto.ExpertiseDTO;
 import com.app.entities.Trainer;
+import com.app.entities.User;
 
 @Service
 @Transactional
@@ -22,10 +25,10 @@ public class TrainerServiceImpl implements TrainerService {
 
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Autowired
 	private ModelMapper mapper;
-	
+
 	@Override
 	public Trainer trainerExpertice(@NotNull Long id) {
 		return trainerDao.findById(id).orElseThrow();
@@ -41,17 +44,42 @@ public class TrainerServiceImpl implements TrainerService {
 //	return expertise;
 //	}
 
+//	@Override
+//	public ExpertiseDTO addExpertise(@Valid ExpertiseDTO expertise) {
+//		if (expertise.getTrainer() != null && userDao.existsById(expertise.getTrainer())) {
+//			User trainer = userDao.findById(expertise.getTrainer()).orElseThrow();
+//			Trainer trainer1 = new Trainer(trainer, expertise.getExpertise());
+//			Trainer savedTrainer = trainerDao.save(trainer1);
+//			if (savedTrainer != null) {
+//				expertise.setStatus(true);
+//			}
+//		}
+//		return expertise;
+//	}
+
 	@Override
 	public ExpertiseDTO addExpertise(@Valid ExpertiseDTO expertise) {
-	    if(expertise.getTrainer() != null && userDao.existsById(expertise.getTrainer())) {
-	        Trainer trainer = mapper.map(expertise, Trainer.class);
-	        Trainer savedTrainer = trainerDao.save(trainer);
-	        if(savedTrainer != null) {
-	            expertise.setStatus(true);
-	        }
-	    }
-	    return expertise;
+		if (expertise.getTrainer() != null && userDao.existsById(expertise.getTrainer())) {
+			User trainer = userDao.findById(expertise.getTrainer()).orElseThrow();
+			Trainer newTrainer = new Trainer(trainer, expertise.getExpertise());
+			Optional<Trainer> existingTrainerOptional = trainerDao.findByTrainer(trainer);
+
+			if (existingTrainerOptional.isPresent()) {
+				Trainer existingTrainer = existingTrainerOptional.get();
+				existingTrainer.setExpertise(expertise.getExpertise());
+				Trainer updatedTrainer = trainerDao.save(existingTrainer);
+				if (updatedTrainer != null) {
+					expertise.setStatus(true);
+				}
+			} else {
+
+				Trainer savedTrainer = trainerDao.save(newTrainer);
+				if (savedTrainer != null) {
+					expertise.setStatus(true);
+				}
+			}
+		}
+		return expertise;
 	}
 
-	
 }
