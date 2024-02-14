@@ -19,7 +19,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name="assigned_diet")
-public class assignedDiet extends BaseEntity {
+public class AssignedDiet extends BaseEntity {
 	
 	@ManyToOne
 	@JoinColumn(name="trainer_id")
