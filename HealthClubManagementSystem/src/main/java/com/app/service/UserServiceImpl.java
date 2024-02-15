@@ -1,6 +1,9 @@
 package com.app.service;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.app.dao.UserDao;
 import com.app.dto.ApprovedDTO;
 import com.app.dto.RegisterUserDTO;
+import com.app.dto.UserProfileRequestDTO;
+import com.app.dto.UserProfileResponseDTO;
 import com.app.entities.User;
 import com.app.enums.Role;
 import com.app.enums.Status;
@@ -74,6 +79,16 @@ public class UserServiceImpl implements UserService {
 		return userDao.findAllByStatusAndRole(Status.APPROVED, Role.TRAINER);
 	}
 
+	@Override
+	public UserProfileResponseDTO updateUserProfile(String email,@Valid UserProfileRequestDTO profileRequest) {
+		Optional<User> optionalUser = userDao.findByEmail(email);
+		if (optionalUser.isPresent()) {
+			User user = optionalUser.get();
+			mapper.map(profileRequest, user);
+			User updatedUser = userDao.saveAndFlush(user);
+			return mapper.map(updatedUser, UserProfileResponseDTO.class);
+		}
+		return null;
+	}
 
-	
 }
