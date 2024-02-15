@@ -39,8 +39,8 @@ public class UserSignInSignUpController {
 						(reqDTO.getEmail(), reqDTO.getPassword()));
 		System.out.println(verifiedAuth.getClass());// Custom user details
 		// => auth success
-		Status s = userService.getStatus(reqDTO.getEmail());
-		Role r= userService.getRole(reqDTO.getEmail());
+		Status s = userService.getUserStatus(reqDTO.getEmail());
+		Role r= userService.getUserRole(reqDTO.getEmail());
 		return ResponseEntity.ok(new SigninResponse(utils.generateJwtToken(verifiedAuth), "Successful Authentication!!!",s,r));
 	
 	}

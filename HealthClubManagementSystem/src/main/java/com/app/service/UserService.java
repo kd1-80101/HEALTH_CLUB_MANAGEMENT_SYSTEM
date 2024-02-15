@@ -2,32 +2,38 @@ package com.app.service;
 
 import java.util.List;
 
-import com.app.dto.RegisterUserDTO;
+import javax.validation.Valid;
+
 import com.app.dto.ApprovedDTO;
+import com.app.dto.RegisterUserDTO;
+import com.app.dto.UserProfileRequestDTO;
+import com.app.dto.UserProfileResponseDTO;
 import com.app.entities.User;
 import com.app.enums.Role;
 import com.app.enums.Status;
 
 public interface UserService {
 
-public RegisterUserDTO registerUser(RegisterUserDTO details);
+    RegisterUserDTO registerUser(RegisterUserDTO details);
 
-public List<User> pendingUsersList();
+    List<User> getPendingUsersList();
 
-public  Status getStatus(String email);
+    Status getUserStatus(String email);
 
-public  Role getRole(String email);
+    Role getUserRole(String email);
 
-public ApprovedDTO approvedUsers(ApprovedDTO approved);
+    ApprovedDTO approveUsers(ApprovedDTO approved);
 
-public List<User> customerList();
+    List<User> getCustomerList();
 
-public List<User> trainerList();
+    List<User> getTrainerList();
 
+    void resetPassword(String email, String newPassword);
 
+    boolean verifyOTP(String email, String otp);
+
+    User findUserByEmail(String email);
+    
+    UserProfileResponseDTO updateUserProfile(String email, @Valid UserProfileRequestDTO profileRequest);
 
 }
-		
-
-	
-

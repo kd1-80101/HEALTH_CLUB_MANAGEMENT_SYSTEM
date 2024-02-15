@@ -2,15 +2,19 @@ package com.app.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+import javax.validation.Valid;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.app.dao.UserDao;
 import com.app.dto.ApprovedDTO;
 import com.app.dto.RegisterUserDTO;
+import com.app.dto.UserProfileRequestDTO;
+import com.app.dto.UserProfileResponseDTO;
 import com.app.entities.User;
 import com.app.enums.Role;
 import com.app.enums.Status;
@@ -28,52 +32,119 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private ModelMapper mapper;
 
+	@Autowired
+	private OtpService otpService;
+
 	@Override
 	public RegisterUserDTO registerUser(RegisterUserDTO reqDTO) {
 		User user = mapper.map(reqDTO, User.class);
 		user.setStatus(Status.PENDING);
 		user.setRole(Role.PENDING);
-		user.setPassword(encoder.encode(user.getPassword()));// pwd : encrypted using SHA
+		user.setPassword(encoder.encode(user.getPassword()));
 		return mapper.map(userDao.save(user), RegisterUserDTO.class);
-
 	}
 
 	@Override
-	public List<User> pendingUsersList() {
-
+	public List<User> getPendingUsersList() {
 		return userDao.findAllByStatus(Status.PENDING);
 	}
 
 	@Override
-	public Status getStatus(String email) {
-		User temp = userDao.findByEmail(email).orElseThrow(); // TODO Auto-generated method stub
+	public Status getUserStatus(String email) {
+		User temp = userDao.findByEmail(email);
+		if (temp == null) {
+			throw new RuntimeException("User not found");
+		}
 		return temp.getStatus();
 	}
 
 	@Override
-	public Role getRole(String email) {
-		User temp = userDao.findByEmail(email).orElseThrow(); // TODO Auto-generated method stub
+	public Role getUserRole(String email) {
+		User temp = userDao.findByEmail(email);
+		if (temp == null) {
+			throw new RuntimeException("User not found");
+		}
 		return temp.getRole();
 	}
 
 	@Override
-	public ApprovedDTO approvedUsers(ApprovedDTO approved) {
-		User id = userDao.findById(approved.getId()).orElseThrow();
-		id.setRole(approved.getRole());
-		id.setStatus(approved.getStatus());
-		return new ApprovedDTO(id.getId(), id.getStatus(), id.getRole());
+	public ApprovedDTO approveUsers(ApprovedDTO approved) {
+		User user = userDao.findById(approved.getId()).orElseThrow();
+		user.setRole(approved.getRole());
+		user.setStatus(approved.getStatus());
+		return new ApprovedDTO(user.getId(), user.getStatus(), user.getRole());
 	}
 
 	@Override
-	public List<User> customerList() {
+	public List<User> getCustomerList() {
 		return userDao.findAllByStatusAndRole(Status.APPROVED, Role.CUSTOMER);
 	}
 
 	@Override
-	public List<User> trainerList() {
+	public List<User> getTrainerList() {
 		return userDao.findAllByStatusAndRole(Status.APPROVED, Role.TRAINER);
 	}
 
+	@Override
+	public void resetPassword(String email, String newPassword) {
+		User user = userDao.findByEmail(email);
+		if (user == null) {
+			throw new RuntimeException("User not found");
+		}
+		user.setPassword(encoder.encode(newPassword));
+		userDao.save(user);
+	}
 
-	
+	@Override
+	public boolean verifyOTP(String email, String otp) {
+		// Implement OTP verification logic here
+		// For simplicity, returning true for now
+		return true;
+	}
+
+	@Override
+	public User findUserByEmail(String email) {
+		return userDao.findByEmail(email);
+	}
+
+	public String generateAndSendOTP(String email) {
+		User user = userDao.findByEmail(email);
+		if (user != null) {
+			String otp = otpService.generateAndSendOTP(email);
+			return otp;
+		} else {
+			throw new RuntimeException("User not found");
+		}
+	}
+
+	@Override
+	public UserProfileResponseDTO updateUserProfile(String email, @Valid UserProfileRequestDTO profileRequest) {
+		User existingUser = userDao.findByEmail(email);
+
+		if (existingUser != null) {
+			existingUser.setFirstName(profileRequest.getFirstName());
+			existingUser.setLastName(profileRequest.getLastName());
+			existingUser.setDateOfBirth(profileRequest.getDateOfBirth());
+			existingUser.setGender(profileRequest.getGender());
+			if (profileRequest.getHeight() != 0.0) {
+				existingUser.setHeight(profileRequest.getHeight());
+			}
+			if (profileRequest.getWeight() != 0.0) {
+				existingUser.setWeight(profileRequest.getWeight());
+			}
+			// Update image if provided
+			if (profileRequest.getProfileId() != null) {
+				existingUser.setProfileId(profileRequest.getProfileId());
+			}
+			if (profileRequest.getEmail() != null) {
+				existingUser.setEmail(profileRequest.getEmail());
+			}
+
+			User updatedUser = userDao.save(existingUser);
+
+			return mapper.map(updatedUser, UserProfileResponseDTO.class);
+		}
+		return null;
+	}
+
 }

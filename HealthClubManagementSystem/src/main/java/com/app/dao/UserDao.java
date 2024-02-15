@@ -11,7 +11,8 @@ import com.app.enums.Status;
 
 public interface UserDao extends JpaRepository<User, Long> {
 
-	Optional<User> findByEmail(String email);
+//	Optional<User> findByEmail(String email);
+	User findByEmail(String email);
 
 	List<User> findAllByRole(Role role);
 
