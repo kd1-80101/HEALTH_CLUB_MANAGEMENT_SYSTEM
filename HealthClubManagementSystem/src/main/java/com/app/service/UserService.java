@@ -10,23 +10,24 @@ import com.app.enums.Status;
 
 public interface UserService {
 
-    RegisterUserDTO registerUser(RegisterUserDTO details);
+public RegisterUserDTO registerUser(RegisterUserDTO details);
 
-    List<User> getPendingUsersList();
+public List<User> pendingUsersList();
 
-    Status getUserStatus(String email);
+public  Status getStatus(String email);
 
-    Role getUserRole(String email);
+public  Role getRole(String email);
 
-    ApprovedDTO approveUsers(ApprovedDTO approved);
+public ApprovedDTO approvedUsers(ApprovedDTO approved);
 
-    List<User> getCustomerList();
+public List<User> customerList();
 
-    List<User> getTrainerList();
+public List<User> trainerList();
 
-    void resetPassword(String email, String newPassword);
-
-    User findUserByEmail(String email);
 
 
 }
+		
+
+	
+

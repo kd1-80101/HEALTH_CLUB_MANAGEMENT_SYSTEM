@@ -36,25 +36,25 @@ public class AdminController {
 	@GetMapping("/pendingList")
 	public ResponseEntity<?> pendingUsersList(){
 	
-		return ResponseEntity.status(HttpStatus.OK).body(userService.getPendingUsersList());
+		return ResponseEntity.status(HttpStatus.OK).body(userService.pendingUsersList());
 	}
 	
 	@PostMapping("/approve")
 	public ResponseEntity<?> approvedUsers(@RequestBody @Valid ApprovedDTO approved){
 	
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.approveUsers(approved));
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.approvedUsers(approved));
 	}
 
 	@GetMapping("/customerList")
 	public ResponseEntity<?> customerList(){
 	
-		return ResponseEntity.status(HttpStatus.OK).body(userService.getCustomerList());
+		return ResponseEntity.status(HttpStatus.OK).body(userService.customerList());
 	}
 	
 	@GetMapping("/trainerList")
 	public ResponseEntity<?> trainerList(){
 	
-		return ResponseEntity.status(HttpStatus.OK).body(userService.getTrainerList());
+		return ResponseEntity.status(HttpStatus.OK).body(userService.trainerList());
 	}
 	
 	@GetMapping("/trainerExpertice/{id}")
