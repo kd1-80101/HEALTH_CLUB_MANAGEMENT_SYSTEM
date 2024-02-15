@@ -15,6 +15,7 @@ import com.app.dao.UserDao;
 import com.app.dto.ExpertiseDTO;
 import com.app.entities.Trainer;
 import com.app.entities.User;
+import com.app.enums.Role;
 
 @Service
 @Transactional
@@ -34,33 +35,11 @@ public class TrainerServiceImpl implements TrainerService {
 		return trainerDao.findById(id).orElseThrow();
 	}
 
-//	@Override
-//	public ExpertiseDTO addExpertise(@Valid ExpertiseDTO expertise) {
-//	if(userDao.existsById(expertise.getTrainer())) {
-//	Trainer save = trainerDao.save(mapper.map(expertise, Trainer.class));
-//	if(save!=null)
-//		expertise.setStatus(true);
-//	}
-//	return expertise;
-//	}
-
-//	@Override
-//	public ExpertiseDTO addExpertise(@Valid ExpertiseDTO expertise) {
-//		if (expertise.getTrainer() != null && userDao.existsById(expertise.getTrainer())) {
-//			User trainer = userDao.findById(expertise.getTrainer()).orElseThrow();
-//			Trainer trainer1 = new Trainer(trainer, expertise.getExpertise());
-//			Trainer savedTrainer = trainerDao.save(trainer1);
-//			if (savedTrainer != null) {
-//				expertise.setStatus(true);
-//			}
-//		}
-//		return expertise;
-//	}
-
 	@Override
 	public ExpertiseDTO addExpertise(@Valid ExpertiseDTO expertise) {
 		if (expertise.getTrainer() != null && userDao.existsById(expertise.getTrainer())) {
 			User trainer = userDao.findById(expertise.getTrainer()).orElseThrow();
+			if(trainer.getRole()==Role.TRAINER) {
 			Trainer newTrainer = new Trainer(trainer, expertise.getExpertise());
 			Optional<Trainer> existingTrainerOptional = trainerDao.findByTrainer(trainer);
 
@@ -78,6 +57,7 @@ public class TrainerServiceImpl implements TrainerService {
 					expertise.setStatus(true);
 				}
 			}
+		}
 		}
 		return expertise;
 	}
