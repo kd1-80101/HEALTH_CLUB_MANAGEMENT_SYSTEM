@@ -26,8 +26,6 @@ public interface UserService {
 
     void resetPassword(String email, String newPassword);
 
-    boolean verifyOTP(String email, String otp);
-
     User findUserByEmail(String email);
 
 

@@ -15,10 +15,13 @@ import com.app.dto.RegisterUserDTO;
 import com.app.entities.User;
 import com.app.enums.Role;
 import com.app.enums.Status;
+import com.app.exception.UserNotFoundException;
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
+
+    private MyLogger logger = MyLogger.getInstance();
 
     @Autowired
     private UserDao userDao;
@@ -81,22 +84,23 @@ public class UserServiceImpl implements UserService {
     public List<User> getTrainerList() {
         return userDao.findAllByStatusAndRole(Status.APPROVED, Role.TRAINER);
     }
-
     @Override
     public void resetPassword(String email, String newPassword) {
+        logger.info("Resetting password for user with email: {}",email);
         User user = userDao.findByEmail(email);
+        
+        try {
         if (user == null) {
-            throw new RuntimeException("User not found");
+            logger.error("User not found for email: {}", email);
+            throw new UserNotFoundException("User not found for email: " + email);
         }
-        user.setPassword(encoder.encode(newPassword));
+        }catch(UserNotFoundException e){
+        	e.printStackTrace();
+        }
+        String encodedPassword = encoder.encode(newPassword);
+        user.setPassword(encodedPassword);
         userDao.save(user);
-    }
-
-    @Override
-    public boolean verifyOTP(String email, String otp) {
-        // Implement OTP verification logic here
-        // For simplicity, returning true for now
-        return true;
+        logger.info("Password reset successfully for user with email: {}");
     }
 
     @Override

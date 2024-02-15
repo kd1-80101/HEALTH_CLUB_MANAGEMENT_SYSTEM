@@ -21,7 +21,6 @@ public class OtpService {
     }
 
     private String generateOTP() {
-        // Implement your OTP generation logic
         // For simplicity, let's use a random 6-digit OTP
         return String.valueOf((int) ((Math.random() * 900000) + 100000));
     }
@@ -34,5 +33,13 @@ public class OtpService {
         // Store the OTP in-memory using a Map
         otpStorage.put(email, otp);
     }
+    
+    public boolean verifyOTP(String email, String otp) {
+        // Retrieve the OTP associated with the email address from the map
+        String storedOTP = otpStorage.get(email);
+        
+        // Check if the stored OTP exists and matches the provided OTP
+        return storedOTP != null && storedOTP.equals(otp);
 }
+    }
 
