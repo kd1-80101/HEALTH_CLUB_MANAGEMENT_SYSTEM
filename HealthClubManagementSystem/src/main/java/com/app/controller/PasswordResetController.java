@@ -24,8 +24,7 @@ public class PasswordResetController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid OTP");
         }
 
-        // Reset password
-        userService.resetPassword(email, newPassword);
+       userService.resetPassword(email, newPassword);
 
         return ResponseEntity.ok("Password reset successfully");
     }
