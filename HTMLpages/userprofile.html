@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile Form</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">User Profile Form</h2>
+        <form action="#" method="post">
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter first name" required maxlength="50">
+                <div class="invalid-feedback">Please provide a first name (up to 50 characters).</div>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter last name" required maxlength="50">
+                <div class="invalid-feedback">Please provide a last name (up to 50 characters).</div>
+            </div>
+            <div class="form-group">
+                <label for="dateOfBirth">Date of Birth</label>
+                <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" required>
+                <div class="invalid-feedback">Please provide a valid date of birth.</div>
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select class="form-control" id="gender" name="gender" required>
+                    <option value="" selected disabled>Select Gender</option>
+                    <option value="MALE">Male</option>
+                    <option value="FEMALE">Female</option>
+                    <option value="OTHER">Other</option>
+                </select>
+                <div class="invalid-feedback">Please select a gender</div>
+            </div>
+            <div class="form-group">
+                <label for="height">Height</label>
+                <input type="number" class="form-control" id="height" name="height" placeholder="Enter height" required>
+                <div class="invalid-feedback">Please provide a height.</div>
+            </div>
+            <div class="form-group">
+                <label for="weight">Weight</label>
+                <input type="number" class="form-control" id="weight" name="weight" placeholder="Enter weight" required>
+                <div class="invalid-feedback">Please provide a weight.</div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+                <div class="invalid-feedback">Please provide a valid email address.</div>
+            </div>
+            <div class="form-group">
+                <label for="profileId">Profile ID</label>
+                <input type="file" class="form-control-file" id="profileId" name="profileId">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
