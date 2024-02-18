@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -33,11 +32,9 @@ public class Feedback extends BaseEntity {
 	private LocalDateTime feedbackDate;
 	
 	@ManyToOne
-	@JoinColumn(name="customer_id",nullable = false)
-	private Customer customer;
+	private User customer;
 	
 	@ManyToOne
-	@JoinColumn(name="trainer_id")
-	private Trainer trainer;
+	private User trainer;
 	
 }
