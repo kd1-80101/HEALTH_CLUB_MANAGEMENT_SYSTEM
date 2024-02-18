@@ -1,0 +1,80 @@
+.form-container.sign-up-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .form-container.sign-up-container form {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .form-container.sign-up-container h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .form-container.sign-up-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .form-container.sign-up-container button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .form-container.sign-up-container button:hover {
+    background-color: #0056b3;
+  }
+  
+  .social-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  
+  .social-container .social {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    margin: 0 10px;
+    text-decoration: none;
+    color: #000;
+  }
+  
+  .social-container .social:hover {
+    background-color: #f2f2f2;
+  }
+  
+  .social-container .social img {
+    width: 80%;
+    height: 80%;
+  }
+  
+  .social-container .social i {
+    font-size: 20px;
+  }
+  
+  span {
+    margin: 10px 0;
+  }
+  
