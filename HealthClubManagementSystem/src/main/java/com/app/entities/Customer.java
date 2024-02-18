@@ -1,13 +1,17 @@
+// Customer.java
 package com.app.entities;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -29,24 +33,28 @@ import lombok.ToString;
 @Entity
 @Table(name="customers")
 public class Customer extends BaseEntity {
-	
-	@Enumerated(EnumType.STRING)
-	private Membership membership;
-	
-	@Column
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate membershipEnd;
-	
-	@OneToOne
+    
+    @Enumerated(EnumType.STRING)
+    private Membership membership;
+    
+    @Column
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate membershipEnd;
+    
+    @ManyToOne
     @JoinColumn(name="user_id")
-    @MapsId
     private User user;
-	
-	@Column
-	private boolean payment;
-	
-	@Column
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate membershipStart;
-	
+    
+    @Column
+    private boolean paymentStatus;
+    
+    @Column
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate membershipStart;
+    
+//    @OneToOne(mappedBy = "user") // Adjusted mapping for One-to-One relationship with Payment
+//    private Payment payment;
+    
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Payment> payments;
 }

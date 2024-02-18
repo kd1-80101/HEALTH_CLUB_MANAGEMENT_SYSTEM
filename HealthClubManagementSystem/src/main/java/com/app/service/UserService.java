@@ -2,8 +2,12 @@ package com.app.service;
 
 import java.util.List;
 
-import com.app.dto.RegisterUserDTO;
+import javax.validation.Valid;
+
 import com.app.dto.ApprovedDTO;
+import com.app.dto.RegisterUserDTO;
+import com.app.dto.UserProfileRequestDTO;
+import com.app.dto.UserProfileResponseDTO;
 import com.app.entities.User;
 import com.app.enums.Role;
 import com.app.enums.Status;
@@ -26,7 +30,10 @@ public interface UserService {
 
     void resetPassword(String email, String newPassword);
 
-    User findUserByEmail(String email);
+    boolean verifyOTP(String email, String otp);
 
+    User findUserByEmail(String email);
+    
+    UserProfileResponseDTO updateUserProfile(String email, @Valid UserProfileRequestDTO profileRequest);
 
 }
