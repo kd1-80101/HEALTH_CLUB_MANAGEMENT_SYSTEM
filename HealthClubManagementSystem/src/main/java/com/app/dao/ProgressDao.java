@@ -6,4 +6,6 @@ import com.app.entities.Progress;
 
 public interface ProgressDao extends JpaRepository<Progress, Long> {
 
+	Progress findByCustomerId(Long id);
+
 }

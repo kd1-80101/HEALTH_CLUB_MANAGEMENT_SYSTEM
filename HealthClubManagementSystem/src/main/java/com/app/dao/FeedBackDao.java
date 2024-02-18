@@ -10,5 +10,7 @@ public interface FeedBackDao extends JpaRepository<Feedback, Long> {
 
 	List<Feedback> findAllByTrainerId(Long id);
 
+	Feedback findByCustomerId(Long id);
+
 
 }

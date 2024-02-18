@@ -20,10 +20,10 @@ public class TrainerAssigningCustomer extends BaseEntity {
     
     @ManyToOne
     @JoinColumn(name="trainer_id")
-    private Trainer trainer;
+    private User trainer;
     
     @ManyToOne
     @JoinColumn(name="customer_id")
-    private Customer customer;
+    private User customer;
     
 }
